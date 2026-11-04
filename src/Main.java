@@ -31,6 +31,8 @@ public class Main {
             return;
         } else {
 
+            Impressora ip = new Impressora();
+
             int opcao = -1;
 
             do {
@@ -58,15 +60,15 @@ public class Main {
 
                     switch (opcao) {
                         case 1:
-                            System.out.println("Configurar conexão");
+                            ip.configurarConexao(teclado);
                             break;
 
                         case 2:
-                            System.out.println("Abrir conexão");
+                            ip.abrirConexao();
                             break;
 
                         case 3:
-                            System.out.println("Fechar conexão");
+                            ip.fecharConexao();
                             break;
 
                         case 4:
