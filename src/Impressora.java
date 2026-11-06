@@ -11,7 +11,7 @@ public class Impressora {
     public boolean verificarConexao = false;
 
 
-    public void configurarConexao(Scanner teclado){
+    public void configurarConexao(Scanner teclado) {
         verificarConexao = false;
 
         try {
@@ -22,7 +22,7 @@ public class Impressora {
                     " 4 - Bluetooth\n");
             tipo = teclado.nextInt();
 
-            if(tipo != 1 && tipo != 2 && tipo != 3 && tipo != 4){
+            if (tipo != 1 && tipo != 2 && tipo != 3 && tipo != 4) {
                 System.out.println("Tipo invalido");
                 return;
             } else {
@@ -34,7 +34,7 @@ public class Impressora {
             System.out.println("Qual o modelo da impressora? (i8/i9) ");
             modelo = teclado.nextLine();
 
-            if(modelo.equalsIgnoreCase("i8") || modelo.equalsIgnoreCase("i9")){
+            if (modelo.equalsIgnoreCase("i8") || modelo.equalsIgnoreCase("i9")) {
                 System.out.println("Modelo valido");
             } else {
                 System.out.println("Modelo invalido");
@@ -44,7 +44,7 @@ public class Impressora {
             System.out.println("Qual a conexão? ");
             conexao = teclado.nextLine();
 
-            if(conexao.isBlank()){
+            if (conexao.isBlank()) {
                 System.out.println("Conexão invalida ou vazia");
                 return;
             } else {
@@ -91,42 +91,42 @@ public class Impressora {
 
     }
 
-    public void abrirConexao(){
+    public void abrirConexao() {
         try {
-            if(!verificarConexao){
+            if (!verificarConexao) {
                 System.out.println("Conexão não foi configurada! Por favor preencha os dados solicitados na opção 1 do menu.");
                 return;
             } else {
                 System.out.println("Abrindo conexão...");
-                if(!conexaoAberta){
+                if (!conexaoAberta) {
                     int resultado = ImpressoraDLL.INSTANCE.AbreConexaoImpressora(tipo, modelo, conexao, parametro);
                     System.out.println("Retorno da DLL: " + resultado);
-                    if(resultado == 0){
+                    if (resultado == 0) {
                         System.out.println("Conexão aberta");
                         conexaoAberta = true;
                     } else {
                         System.out.println("Conexão fechada");
-                        conexaoAberta = false;
+                        //conexaoAberta = false;
                     }
                 }
             }
-        } catch (UnsatisfiedLinkError e){
+        } catch (UnsatisfiedLinkError e) {
             System.out.println("Não foi possível carregar a DLL: " + e.getMessage());
         }
     }
 
-    public void fecharConexao(){
+    public void fecharConexao() {
         try {
-            if(!verificarConexao){
+            if (!verificarConexao) {
                 System.out.println("Conexão não foi configurada! Por favor preencha os dados solicitados na opção 1 do menu.");
                 return;
             } else {
-                if(!conexaoAberta){
+                if (!conexaoAberta) {
                     System.out.println("A conexão já está fechada no sistema.");
-                } else{
+                } else {
                     int resultado = ImpressoraDLL.INSTANCE.FechaConexaoImpressora();
                     System.out.println("Retorno da DLL (Fechar): " + resultado);
-                    if(resultado == 0){
+                    if (resultado == 0) {
                         System.out.println("Conexão FECHADA com sucesso!");
                         conexaoAberta = false;
                     } else {
@@ -135,10 +135,38 @@ public class Impressora {
                     }
                 }
             }
-        } catch (UnsatisfiedLinkError e){
+        } catch (UnsatisfiedLinkError e) {
             System.out.println("Não foi possível carregar a DLL: " + e.getMessage());
         }
     }
 
+    public void ImpressaoTexto(Scanner teclado) {
+        try {
+            if (!verificarConexao) {
+                System.out.println("Conexão não foi configurada! Por favor preencha os dados solicitados na opção 1 do menu.");
+                return;
+            } else {
+                System.out.println("Impressão de texto");
+                if (!conexaoAberta) {
+                    System.out.println("Digite um texto para ser impresso: ");
+                    String texto = teclado.nextLine();
 
+                    int resultado = ImpressoraDLL.INSTANCE.ImpressaoTexto(texto, 1, 4, 0);
+                    System.out.println("Retorno DLL: " + resultado);
+                    if(resultado > 0){
+                        System.out.println("Texto impresso");
+
+                    }
+                    else {
+                        System.out.println("Erro ao imprimir");
+
+                    }
+
+                }
+
+            }
+        } catch (UnsatisfiedLinkError e) {
+            System.out.println("Não foi possível carregar a DLL: " + e.getMessage());
+        }
+    }
 }

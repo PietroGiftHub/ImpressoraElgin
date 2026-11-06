@@ -72,7 +72,7 @@ public class Main {
                             break;
 
                         case 4:
-                            System.out.println("Imprimir texto");
+                            ip.ImpressaoTexto(teclado);
                             break;
 
                         case 5:
