@@ -72,11 +72,11 @@ public class Main {
                             break;
 
                         case 4:
-                            ip.ImpressaoTexto(teclado);
+                            ip.impressaoTexto(teclado);
                             break;
 
                         case 5:
-                            System.out.println("Imprimir QR Code");
+                            ip.impressaoQRCode(teclado);
                             break;
 
                         case 6:
