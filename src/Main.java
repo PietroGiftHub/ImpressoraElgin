@@ -80,11 +80,11 @@ public class Main {
                             break;
 
                         case 6:
-                            System.out.println("Imprimir código de barras");
+                            ip.impressaoCodigoBarras(teclado);
                             break;
 
                         case 7:
-                            System.out.println("Imprimir XML SAT");
+                            ip.imprimeXMLSAT();
                             break;
 
                         case 8:

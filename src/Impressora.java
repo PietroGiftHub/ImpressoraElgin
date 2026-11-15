@@ -1,5 +1,7 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.io.File;
+
 
 public class Impressora {
 
@@ -153,6 +155,11 @@ public class Impressora {
                 System.out.println("Digite o texto a ser impresso: ");
                 String texto = teclado.nextLine();
 
+                if(texto.isBlank()){
+                    System.out.println("Texto vazio. Digite algo....");
+                    return;
+                }
+
                 int retorno = ImpressoraDLL.INSTANCE.ImpressaoTexto(texto, 1, 0, 50);
                 if (retorno > 0) {
                     System.out.println("Texto enviado pra impressão com sucesso!");
@@ -191,6 +198,11 @@ public class Impressora {
                 System.out.println("Digite o texto do QRcode: ");
                 String texto = teclado.nextLine();
 
+                if(texto.isBlank()){
+                    System.out.println("Texto vazio. Digite algo....");
+                    return;
+                }
+
                 int retorno = ImpressoraDLL.INSTANCE.ImpressaoQRCode(texto, 6, 4);
                 if (retorno == 0) {
                     System.out.println("QR code impresso com sucesso");
@@ -205,6 +217,93 @@ public class Impressora {
 
                 } else {
                     System.out.println("Erro na impressão: " + retorno);
+                }
+            } else {
+                System.out.println("Conexão fechada. Configure corretamente na opção 2 do menu");
+                return;
+            }
+
+        } catch (UnsatisfiedLinkError e){
+            System.out.println("Não foi possível carregar a DLL: " + e.getMessage());
+        }
+    }
+
+    public void impressaoCodigoBarras(Scanner teclado){
+        try {
+            if (!verificarConexao) {
+                System.out.println("Conexão não foi configurada! Por favor preencha os dados solicitados na opção 1 do menu.");
+                return;
+            }
+
+            if (conexaoAberta) {
+                teclado.nextLine();
+
+                System.out.println("Digite o texto do código de barras: ");
+                String texto = teclado.nextLine();
+
+                if(texto.isBlank()){
+                    System.out.println("Texto vazio. Digite algo....");
+                    return;
+                }
+
+                int retorno = ImpressoraDLL.INSTANCE.ImpressaoCodigoBarras(8, "{A" +  texto, 100, 3, 2);
+                if (retorno == 0) {
+                    System.out.println("Codígo de barras impresso com sucesso");
+
+                    int retornoCorte = ImpressoraDLL.INSTANCE.Corte(5);
+
+                    if (retornoCorte == 0) {
+                        System.out.println("Papel cortado com sucesso!");
+                    } else {
+                        System.out.println("Erro ao cortar o papel: " + retornoCorte);
+                    }
+
+                } else {
+                    System.out.println("Erro na impressão: " + retorno);
+                }
+            } else {
+                System.out.println("Conexão fechada. Configure corretamente na opção 2 do menu");
+                return;
+            }
+
+        } catch (UnsatisfiedLinkError e){
+            System.out.println("Não foi possível carregar a DLL: " + e.getMessage());
+        }
+    }
+
+    public void imprimeXMLSAT(){
+        try {
+            if (!verificarConexao) {
+                System.out.println("Conexão não foi configurada! Por favor preencha os dados solicitados na opção 1 do menu.");
+                return;
+            }
+
+            if (conexaoAberta){
+                File arquivo = new File("XMLSAT.xml");
+
+                if(arquivo.exists()){
+                    System.out.println("Arquivo encontrado");
+
+                    String dados = "path=" + arquivo.getAbsolutePath();
+                    int retorno = ImpressoraDLL.INSTANCE.ImprimeXMLSAT(dados, 0);
+
+                    if (retorno == 0) {
+                        System.out.println("Arquivo XMLSAT impresso com sucesso!");
+
+                        int retornoCorte = ImpressoraDLL.INSTANCE.Corte(5);
+
+                        if (retornoCorte == 0) {
+                            System.out.println("Papel cortado com sucesso!");
+                        } else {
+                            System.out.println("Erro ao cortar o papel: " + retornoCorte);
+                        }
+
+                    } else {
+                        System.out.println("Erro na impressão: " + retorno);
+                    }
+
+                } else {
+                    System.out.println("Arquivo XML não encontrado!");
                 }
             } else {
                 System.out.println("Conexão fechada. Configure corretamente na opção 2 do menu");
