@@ -390,4 +390,40 @@ public class Impressora {
         }
     }
 
+    public void sinalSonoro(Scanner teclado){
+        try {
+            if (!verificarConexao){
+                System.out.println("Conexão não foi configurada! Por favor preencha os dados solicitados na opção 1 do menu.");
+                return;
+            }
+
+            if (conexaoAberta){
+                teclado.nextLine();
+
+                System.out.println("Quantas vezes você quer tocar o sinal? (max 5) ");
+                int qtd = teclado.nextInt();
+
+                if(qtd > 5 || qtd <= 0){
+                    System.out.println("Quantidade inválida. Digite um número de 1 a 5.");
+                } else {
+                    int retorno = ImpressoraDLL.INSTANCE.SinalSonoro(qtd, 50, 5);
+
+                    if (retorno == 0){
+                        System.out.println("Som ATIVADO");
+                    } else {
+                        System.out.println("Erro ao ativar o som: " + retorno);
+                    }
+                }
+
+            } else {
+                System.out.println("Conexão fechada. Abra a conexão na opção 2 do menu primeiro.");
+                return;
+            }
+        } catch (InputMismatchException e){
+            teclado.nextLine();
+            System.out.println("Entrada inválida. Digite apenas números inteiros.");
+        } catch (UnsatisfiedLinkError e){
+            System.out.println("Não foi possível carregar a DLL: " + e.getMessage());
+        }
+    }
 }

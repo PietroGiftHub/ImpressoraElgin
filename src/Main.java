@@ -96,7 +96,7 @@ public class Main {
                             break;
 
                         case 10:
-                            System.out.println("Sinal sonoro (bip)");
+                            ip.sinalSonoro(teclado);
                             break;
 
                         case 0:
