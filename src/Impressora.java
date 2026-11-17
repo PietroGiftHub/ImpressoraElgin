@@ -314,4 +314,80 @@ public class Impressora {
             System.out.println("Não foi possível carregar a DLL: " + e.getMessage());
         }
     }
+
+    public void imprimeXMLCancelamentoSAT(){
+        try {
+            if (!verificarConexao) {
+                System.out.println("Conexão não foi configurada! Por favor preencha os dados solicitados na opção 1 do menu.");
+                return;
+            }
+
+            if (conexaoAberta){
+                File arquivo = new File("CANC_SAT.xml");
+
+                if(arquivo.exists()){
+                    System.out.println("Arquivo encontrado");
+
+                    String dados = "path=" + arquivo.getAbsolutePath();
+                    String assQRCode = "Q5DLkpdRijIRGY6YSSNsTWK1TztHL1vD0V1Jc4spo/CEUqICEb9SFy82ym8EhBRZjbh3btsZhF+sjHqEMR159i4agru9x6KsepK/q0" +
+                            "E2e5xlU5cv3m1woYfgHyOkWDNcSdMsS6bBh2Bpq6s89yJ9Q6qh/J8YHi306ce9Tqb/drKvN2XdE5noRSS32TAWuaQEVd7u+TrvXlOQ" +
+                            "sE3fHR1D5f1saUwQLPSdIv01NF6Ny7jZwjCwv1uNDgGZONJdlTJ6p0ccqnZvuE70aHOI09elpjEO6Cd+orI7XHHrFCwhFhAcbalc+Z" +
+                            "fO5b/+vkyAHS6CYVFCDtYR9Hi5qgdk31v23w==";
+
+                    int retorno = ImpressoraDLL.INSTANCE.ImprimeXMLCancelamentoSAT(dados, assQRCode, 0);
+
+                    if (retorno == 0) {
+                        System.out.println("Arquivo CANC_SAT impresso com sucesso!");
+
+                        int retornoCorte = ImpressoraDLL.INSTANCE.Corte(5);
+
+                        if (retornoCorte == 0) {
+                            System.out.println("Papel cortado com sucesso!");
+                        } else {
+                            System.out.println("Erro ao cortar o papel: " + retornoCorte);
+                        }
+
+                    } else {
+                        System.out.println("Erro na impressão: " + retorno);
+                    }
+
+                } else {
+                    System.out.println("Arquivo XML não encontrado!");
+                }
+            } else {
+                System.out.println("Conexão fechada. Configure corretamente na opção 2 do menu");
+                return;
+            }
+
+        } catch (UnsatisfiedLinkError e){
+            System.out.println("Não foi possível carregar a DLL: " + e.getMessage());
+        }
+    }
+
+    public void abreGaveta(){
+        try {
+            if (!verificarConexao){
+                System.out.println("Conexão não foi configurada! Por favor preencha os dados solicitados na opção 1 do menu.");
+                return;
+            }
+
+            if (conexaoAberta){
+                System.out.println("Enviando comando para abrir gaveta...");
+
+                int retorno = ImpressoraDLL.INSTANCE.AbreGaveta(1, 5, 0);
+
+                if (retorno == 0){
+                    System.out.println("Comando de abertura de gaveta enviado com sucesso!");
+                } else {
+                    System.out.println("Erro ao abrir a gaveta: " + retorno);
+                }
+            } else {
+                System.out.println("Conexão fechada. Abra a conexão na opção 2 do menu primeiro.");
+                return;
+            }
+        } catch (UnsatisfiedLinkError e){
+            System.out.println("Não foi possível carregar a DLL: " + e.getMessage());
+        }
+    }
+
 }

@@ -88,11 +88,11 @@ public class Main {
                             break;
 
                         case 8:
-                            System.out.println("Imprimir XML de cancelamento SAT");
+                            ip.imprimeXMLCancelamentoSAT();
                             break;
 
                         case 9:
-                            System.out.println("Abrir gaveta");
+                            ip.abreGaveta();
                             break;
 
                         case 10:
