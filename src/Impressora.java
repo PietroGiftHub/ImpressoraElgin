@@ -126,6 +126,7 @@ public class Impressora {
                 if (!conexaoAberta) {
                     System.out.println("A conexão já está fechada no sistema.");
                 } else {
+                    System.out.println("Fechando conexão...");
                     int resultado = ImpressoraDLL.INSTANCE.FechaConexaoImpressora();
                     System.out.println("Retorno da DLL (Fechar): " + resultado);
                     if (resultado == 0) {
