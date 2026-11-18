@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
@@ -27,7 +28,7 @@ public class Main {
         }
 
         if(!logado){
-            System.out.println("Número máximo de tentativas atingido. Encerrando...");
+            System.out.println("Número máximo de tentativas atingido. Programa encerrado.");
             return;
         } else {
 
@@ -108,14 +109,14 @@ public class Main {
                             break;
                     }
                 } catch (InputMismatchException e){
-                    System.out.println("Entrada inválida. Digite números, não digite por extenso.");
+                    System.out.println("Entrada inválida. Digite números, não escreva os números por extenso.");
                     teclado.nextLine();
                     opcao = -1;
                 }
 
             } while (opcao != 0);
 
+            teclado.close();
         }
-
     }
 }

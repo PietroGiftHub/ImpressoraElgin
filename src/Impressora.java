@@ -2,7 +2,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.File;
 
-
 public class Impressora {
 
     public int tipo;
@@ -17,80 +16,80 @@ public class Impressora {
         verificarConexao = false;
 
         try {
-            System.out.println("Qual o tipo de conexão?\n " +
+            System.out.println("Qual o tipo de conexão?\n" +
                     "1 - USB\n" +
-                    " 2 - Serial(RS232)\n" +
-                    " 3 - Rede (TCP/IP)\n" +
-                    " 4 - Bluetooth\n");
+                    "2 - Serial (RS232)\n" +
+                    "3 - Rede (TCP/IP)\n" +
+                    "4 - Bluetooth\n");
+
             tipo = teclado.nextInt();
 
             if (tipo != 1 && tipo != 2 && tipo != 3 && tipo != 4) {
-                System.out.println("Tipo invalido");
+                System.out.println("Tipo inválido!");
                 return;
             } else {
-                System.out.println("Tipo: " + tipo + " valido!");
+                System.out.println("Tipo " + tipo + " válido!");
             }
 
             teclado.nextLine();
 
-            System.out.println("Qual o modelo da impressora? (i8/i9) ");
+            System.out.println("Qual o modelo da impressora? (i8/i9)");
             modelo = teclado.nextLine();
 
             if (modelo.equalsIgnoreCase("i8") || modelo.equalsIgnoreCase("i9")) {
-                System.out.println("Modelo valido");
+                System.out.println("Modelo válido!");
             } else {
-                System.out.println("Modelo invalido");
+                System.out.println("Modelo inválido!");
                 return;
             }
 
-            System.out.println("Qual a conexão? ");
+            System.out.println("Qual a conexão?");
             conexao = teclado.nextLine();
 
             if (conexao.isBlank()) {
-                System.out.println("Conexão invalida ou vazia");
+                System.out.println("Conexão inválida ou vazia!");
                 return;
             } else {
-                System.out.println("Conexão valida");
+                System.out.println("Conexão válida!");
             }
 
-            System.out.println("Digite o parametro da conexão: ");
+            System.out.println("Digite o parâmetro da conexão:");
             parametro = teclado.nextInt();
 
             if (tipo == 1) {
                 if (parametro != 0) {
-                    System.out.println("Parametro invalido para USB");
+                    System.out.println("Parâmetro inválido para USB!");
                     return;
                 } else {
-                    System.out.println("Parametro USB valido");
+                    System.out.println("Parâmetro USB válido!");
                 }
 
             } else if (tipo == 2) {
                 if (parametro <= 0) {
-                    System.out.println("Velocidade invalida para Serial");
+                    System.out.println("Velocidade inválida para Serial!");
                     return;
                 } else {
-                    System.out.println("Parametro Serial valido");
+                    System.out.println("Parâmetro Serial válido!");
                 }
 
             } else if (tipo == 3) {
                 if (parametro <= 0) {
-                    System.out.println("Porta invalida para Rede");
+                    System.out.println("Porta inválida para Rede!");
                     return;
                 } else {
-                    System.out.println("Parametro Rede valido");
+                    System.out.println("Parâmetro de Rede válido!");
                 }
 
             } else if (tipo == 4) {
-                System.out.println("Validacao do Bluetooth ainda nao definida");
+                System.out.println("Validação do Bluetooth concluída!");
             }
 
             verificarConexao = true;
 
         } catch (InputMismatchException e) {
             teclado.nextLine();
-            System.out.println("Entrada invalida. Digite números");
+            System.out.println("Entrada inválida. Digite números!");
         }
-
     }
 
     public void abrirConexao() {
